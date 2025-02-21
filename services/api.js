@@ -1,25 +1,34 @@
 import axios from "axios";
-import { MOVIES_API_KEY } from 'react-native-dotenv';
 
-// const API_KEY = process.env.MOVIES_API_KEY;
-// const API_KEY = MOVIES_API_KEY;
-const API_KEY = "0e790d3ac7b5c5b93e92dac92bd7d154";
-console.log('api_keu', API_KEY);
-const BASE_URL = "https://api.themoviedb.org/3";
+const BASE_URL = "http://localhost:7001/api";
 
 
 export const fetchMovies = (category) => {
-  return axios.get(`${BASE_URL}/movie/${category}?api_key=${API_KEY}`);
+  return axios.get(`${BASE_URL}/movie/${category}`)
+    .then(response => response.data)
+    .catch(error => console.error('Error fetching movies:', error));
 };
 
 export const fetchTVShows = (category) => {
-  return axios.get(`${BASE_URL}/tv/${category}?api_key=${API_KEY}`);
+  return axios.get(`${BASE_URL}/tv/${category}`)
+    .then(response => response.data)
+    .catch(error => console.error('Error fetching TV shows:', error));
 };
 
 export const searchMedia = (query, type) => {
-  return axios.get(`${BASE_URL}/search/${type}?api_key=${API_KEY}&query=${query}`);
+  return axios.get(`${BASE_URL}/search/${type}?query=${query}`)
+    .then(response => response.data)
+    .catch(error => console.error('Error searching media:', error));
 };
 
 export const getMovieDetails = (movieId) => {
-  return axios.get(`${BASE_URL}/movie/${movieId}?api_key=${API_KEY}`);
+  return axios.get(`${BASE_URL}/movie/details/${movieId}`)
+    .then(response => response.data)
+    .catch(error => console.error('Error fetching movie details:', error));
+};
+
+export const getTvShowDetails = (tvShowId) => {
+  return axios.get(`${BASE_URL}/tv/details/${tvShowId}`)
+    .then(response => response.data)
+    .catch(error => console.error('Error fetching TV show details:', error));
 };
