@@ -24,7 +24,7 @@ const MovieDetailScreen: React.FC = () => {
     const fetchMovieDetails = async () => {
       try {
         const response = await getMovieDetails(id);
-        setMovie(response.data);
+        setMovie(response);
       } catch (error) {
         console.error('Error fetching movie details:', error);
       } finally {
@@ -35,10 +35,10 @@ const MovieDetailScreen: React.FC = () => {
   }, [id]);
 
   useEffect(() => {
-      if (movie) {
-        navigation.setOptions({ title: movie.title });
-      }
-    }, [movie, navigation]);
+    if (movie) {
+      navigation.setOptions({ title: movie.title });
+    }
+  }, [movie, navigation]);
 
   if (loading) {
     return (

@@ -3,6 +3,7 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, FlatList } from 'r
 import { searchMedia } from '@/services/api';
 import { Modalize } from 'react-native-modalize';
 import MovieCard from '@/components/MovieCard';
+import TvShowCard from '@/components/TvShowCard';
 
 interface Data {
   poster_path: string;
@@ -12,11 +13,12 @@ interface Data {
   name: string;
   id: number;
   first_air_date: string;
+  original_name: string;
 }
 
 const SearchResults: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
-  const [searchType, setSearchType] = useState('multi');
+  const [searchType, setSearchType] = useState('movie');
   const [data, setData] = useState<Data[]>([]);
   const [shouldSearch, setShouldSearch] = useState(false);
   const [error, setError] = useState(''); // State for error message
@@ -29,7 +31,7 @@ const SearchResults: React.FC = () => {
     }
 
     // Clear the error if input is valid
-    setError(''); 
+    setError('');
 
     searchMedia(searchQuery, searchType)
       .then((response) => {
@@ -71,22 +73,26 @@ const SearchResults: React.FC = () => {
           <Text style={styles.buttonText}>Search</Text>
         </TouchableOpacity>
       </View>
-      
+
       <Text style={styles.bottomMargin}>Please select a search Type</Text>
 
-      
 
-      {shouldSearch && (
+
+      {!shouldSearch ? (
+        <Text style={styles.message}>Please initiate the search.</Text>
+      ) : data.length === 0 ? (
+        <Text>No results found. Please try another search.</Text>
+      ) : (
         <FlatList
           data={data}
           keyExtractor={(item) => item.id.toString()}
-          renderItem={({ item }) => <MovieCard movie={item} />}
+          renderItem={({ item }) => (searchType == 'movie') ? <MovieCard movie={item} /> : <TvShowCard tvshow={item} />}
         />
       )}
 
       <Modalize ref={modalizeRef} snapPoint={250} modalHeight={300}>
         <View style={styles.modalContent}>
-          {['multi', 'movie', 'tv'].map((category) => (
+          {['movie', 'tv', 'multi'].map((category) => (
             <TouchableOpacity
               key={category}
               style={styles.modalOption}
@@ -162,7 +168,7 @@ const styles = StyleSheet.create({
   button: {
     marginVertical: 10,
     marginHorizontal: 10,
-    backgroundColor: '#29b6f6',
+    backgroundColor: '#E5989B',
     paddingHorizontal: 20,
     paddingVertical: 10,
     alignItems: 'center',
@@ -181,5 +187,12 @@ const styles = StyleSheet.create({
   },
   bottomMargin: {
     marginBottom: 20
+  },
+  message: {
+    fontSize: 26,
+    color: '#000',
+    padding: 10,
+    textAlign: 'center',
+    paddingVertical: 100,
   }
 });

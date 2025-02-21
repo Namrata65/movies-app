@@ -7,7 +7,7 @@ import { getTvShowDetails } from '@/services/api';
 interface TvShow {
   id: number;
   name: string;
-  original_name:string;
+  original_name: string;
   overview: string;
   poster_path: string;
   popularity: number;
@@ -25,7 +25,7 @@ const TvShowDetailCard: React.FC = () => {
     const fetchTvshowDetails = async () => {
       try {
         const response = await getTvShowDetails(id);
-        setTvShow(response.data);
+        setTvShow(response);
       } catch (error) {
         console.error('Error fetching tvshow details:', error);
       } finally {

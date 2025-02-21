@@ -8,8 +8,8 @@ const TopNavigation: React.FC = () => {
     return (
         <Tab.Navigator
             screenOptions={{
-                tabBarActiveTintColor: '#183B47',
-                tabBarIndicatorStyle: { backgroundColor: '#183B47' },
+                tabBarActiveTintColor: '#56021F',
+                tabBarIndicatorStyle: { backgroundColor: '#56021F' },
                 tabBarStyle: { backgroundColor: '#FFFFFF' },
             }}>
             <Tab.Screen name="Movies" component={Movies} />

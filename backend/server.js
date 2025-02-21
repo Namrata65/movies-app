@@ -10,14 +10,14 @@ const PORT = process.env.PORT || 7001;
 
 app.use(cors());
 
-const TMDB_API_KEY = process.env.MOVIES_API_KEY;
+const API_KEY = process.env.MOVIES_API_KEY;
 const BASE_URL = 'https://api.themoviedb.org/3'; 
 
 // Fetch movies by category
 app.get('/api/movie/:category', async (req, res) => {
     const { category } = req.params;
     try {
-        const response = await axios.get(`${BASE_URL}/movie/${category}?api_key=${TMDB_API_KEY}`);
+        const response = await axios.get(`${BASE_URL}/movie/${category}?api_key=${API_KEY}`);
         res.json(response.data);
     } catch (error) {
         res.status(500).json({ message: 'Error fetching movies', error });
@@ -28,7 +28,7 @@ app.get('/api/movie/:category', async (req, res) => {
 app.get('/api/tv/:category', async (req, res) => {
     const { category } = req.params;
     try {
-        const response = await axios.get(`${BASE_URL}/tv/${category}?api_key=${TMDB_API_KEY}`);
+        const response = await axios.get(`${BASE_URL}/tv/${category}?api_key=${API_KEY}`);
         res.json(response.data);
     } catch (error) {
         res.status(500).json({ message: 'Error fetching TV shows', error });
@@ -40,7 +40,7 @@ app.get('/api/search/:type', async (req, res) => {
     const { type } = req.params;  
     const { query } = req.query;
     try {
-        const response = await axios.get(`${BASE_URL}/search/${type}?api_key=${TMDB_API_KEY}&query=${query}`);
+        const response = await axios.get(`${BASE_URL}/search/${type}?api_key=${API_KEY}&query=${query}`);
         res.json(response.data);
     } catch (error) {
         res.status(500).json({ message: 'Error searching media', error });
@@ -51,7 +51,7 @@ app.get('/api/search/:type', async (req, res) => {
 app.get('/api/movie/details/:movieId', async (req, res) => {
     const { movieId } = req.params;
     try {
-        const response = await axios.get(`${BASE_URL}/movie/${movieId}?api_key=${TMDB_API_KEY}`);
+        const response = await axios.get(`${BASE_URL}/movie/${movieId}?api_key=${API_KEY}`);
         res.json(response.data);
     } catch (error) {
         res.status(500).json({ message: 'Error fetching movie details', error });
@@ -62,7 +62,7 @@ app.get('/api/movie/details/:movieId', async (req, res) => {
 app.get('/api/tv/details/:tvShowId', async (req, res) => {
     const { tvShowId } = req.params;
     try {
-        const response = await axios.get(`${BASE_URL}/tv/${tvShowId}?api_key=${TMDB_API_KEY}`);
+        const response = await axios.get(`${BASE_URL}/tv/${tvShowId}?api_key=${API_KEY}`);
         res.json(response.data);
     } catch (error) {
         res.status(500).json({ message: 'Error fetching TV show details', error });

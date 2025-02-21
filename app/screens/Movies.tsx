@@ -7,15 +7,14 @@ import { Modalize } from 'react-native-modalize';
 
 const Movies = () => {
   const [movies, setMovies] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState('popular'); 
-  const modalizeRef = useRef<Modalize>(null); // Ref for modal
-
+  const [selectedCategory, setSelectedCategory] = useState('popular');
+  const modalizeRef = useRef<Modalize>(null); 
   // Fetch movies based on selected category
   useEffect(() => {
     fetchMovies(selectedCategory)
       .then((response) => {
-        console.log('response in resultd', response);
-        setMovies(response.results)})
+        setMovies(response.results)
+      })
       .catch((error) => console.error(error));
   }, [selectedCategory]);
 
@@ -27,7 +26,7 @@ const Movies = () => {
   // Function to handle category selection
   const handleCategorySelect = (category: string) => {
     setSelectedCategory(category);
-    modalizeRef.current?.close(); // Close modal after selection
+    modalizeRef.current?.close(); 
   };
 
   return (
@@ -36,15 +35,13 @@ const Movies = () => {
         <Text style={styles.dropdownText}>{selectedCategory.replace('_', ' ').toUpperCase()}</Text>
       </TouchableOpacity>
 
-      {/* Movies List */}
       <FlatList
         data={movies}
         keyExtractor={(item: any) => item.id.toString()}
         renderItem={({ item }) => <MovieCard movie={item} />}
       />
 
-      {/* Bottom Sheet Modal */}
-      <Modalize ref={modalizeRef} snapPoint={250} modalHeight={300}>
+      <Modalize ref={modalizeRef} snapPoint={320} modalHeight={400}>
         <View style={styles.modalContent}>
           {['now_playing', 'popular', 'top_rated', 'upcoming'].map((category) => (
             <TouchableOpacity
@@ -65,7 +62,6 @@ const Movies = () => {
 
 export default Movies;
 
-// Styles
 const styles = StyleSheet.create({
   dropdownButton: {
     backgroundColor: '#fff',
@@ -103,6 +99,9 @@ const styles = StyleSheet.create({
   modalOptionText: {
     fontSize: 16,
     textTransform: 'capitalize',
+  },
+  dropdownIcon: {
+    marginLeft: 5,
   },
 });
 

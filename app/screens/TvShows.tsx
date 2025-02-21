@@ -13,8 +13,8 @@ const TvShows = () => {
   useEffect(() => {
     fetchTVShows(selectedCategory)
       .then((response) => {
-        console.log('response search', response)
-        setTvShows(response.results)})
+        setTvShows(response.results)
+      })
       .catch((error) => console.error(error));
   }, [selectedCategory]);
 
@@ -26,9 +26,9 @@ const TvShows = () => {
   // Function to handle category selection
   const handleCategorySelect = (category: string) => {
     setSelectedCategory(category);
-    modalizeRef.current?.close(); // Close modal after selection
+    modalizeRef.current?.close(); 
   };
-  
+
   return (
     <ThemedView>
       <TouchableOpacity style={styles.dropdownButton} onPress={openModal}>
@@ -41,7 +41,7 @@ const TvShows = () => {
         renderItem={({ item }) => <TvShowCard tvshow={item} />}
       />
 
-      <Modalize ref={modalizeRef} snapPoint={250} modalHeight={300}>
+      <Modalize ref={modalizeRef} snapPoint={320} modalHeight={400}>
         <View style={styles.modalContent}>
           {['airing_today', 'on_the_air', 'popular', 'top_rated'].map((category) => (
             <TouchableOpacity
